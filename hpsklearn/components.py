@@ -1282,7 +1282,7 @@ def _xgboost_hp_space(
     colsample_bylevel=None,
     reg_alpha=None,
     reg_lambda=None,
-    scale_pos_weight=1,
+    scale_pos_weight=None,
     base_score=0.5,
     random_state=None,
     n_jobs=-1):
