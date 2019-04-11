@@ -1266,6 +1266,9 @@ def _xgboost_reg_alpha(name):
 def _xgboost_reg_lambda(name):
     return hp.loguniform(name, np.log(1), np.log(4))
 
+def _xgboost_scale_pos_weight(name):
+    return hp.uniform(name, 0.1, 10)
+
 def _xgboost_hp_space(
     name_func,
     max_depth=None,
@@ -1307,7 +1310,8 @@ def _xgboost_hp_space(
                    if reg_alpha is None else reg_alpha),
         reg_lambda=(_xgboost_reg_lambda(name_func('reg_lambda'))
                     if reg_lambda is None else reg_lambda),
-        scale_pos_weight=scale_pos_weight,
+        scale_pos_weight=(_xgboost_scale_pos_weight(name_func('scale_pos_weight'))
+                    if scale_pos_weight is None else scale_pos_weight),
         base_score=base_score,
         seed=_random_state(name_func('rstate'), random_state),
         n_jobs=n_jobs
