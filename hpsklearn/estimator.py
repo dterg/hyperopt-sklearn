@@ -810,6 +810,26 @@ class hyperopt_estimator(BaseEstimator):
             EXfit_list=EX_list, ex_pps_list=self._best_ex_preprocs
         )
         return self._best_learner.predict(XEX)
+    
+    def predict_proba(self, X, EX_list=None):
+        """
+        Use the best model found by previous fit() to make a prediction.
+        """
+        if EX_list is not None:
+            assert isinstance(EX_list, (list, tuple))
+            assert len(EX_list) == self.n_ex_pps
+
+        # -- copy because otherwise np.utils.check_arrays sometimes does not
+        #    produce a read-write view from read-only memory
+        if scipy.sparse.issparse(X):
+            X = scipy.sparse.csr_matrix(X)
+        else:
+            X = np.array(X)
+        XEX = transform_combine_XEX(
+            X, self.info, en_pps=self._best_preprocs, 
+            EXfit_list=EX_list, ex_pps_list=self._best_ex_preprocs
+        )
+        return self._best_learner.predict_proba(XEX)
 
     def score(self, X, y, EX_list=None):
         """
