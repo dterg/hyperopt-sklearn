@@ -1521,9 +1521,7 @@ def _catboost_hp_space(name_func,
                              if bagging_temperature is None else bagging_temperature),
         random_strength=(_catboost_random_strength(name_func('random_strength'))
                              if random_strength is None else random_strength),
-        seed=_random_state(name_func('rstate'), random_state),
-        n_jobs=n_jobs
-    )
+        seed=_random_state(name_func('rstate'), random_state))
     return hp_space
 
 
