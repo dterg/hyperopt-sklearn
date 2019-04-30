@@ -1500,8 +1500,7 @@ def _catboost_hp_space(name_func,
     min_data_in_leaf = None,
     max_leaves = None,
     score_function = None,
-    leaf_estimation_backtracking = None,
-    n_jobs=-1):
+    leaf_estimation_backtracking = None):
     '''Generate CatBoost hyperparameters search space'''
     hp_space = dict(
         max_depth=(_catboost_max_depth(name_func('max_depth'))
