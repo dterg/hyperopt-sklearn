@@ -1385,11 +1385,11 @@ def xgboost_regression(name, objective='reg:linear', **kwargs):
 
 def _catboost_max_depth(name):
     "Recommended to be optimized. Maximum is 16 vs. XGBoost"
-    return scope.int(hp.uniform(name, 1, 16))
+    return hp.choice(name, list(range(4,17,1)))
 
 def _catboost_learning_rate(name):
     "Recommended to be optimized"
-    return hp.loguniform(name, np.log(0.0001), np.log(0.5)) - 0.0001
+    return hp.loguniform(name, -5, 0)
 
 def _catboost_n_estimators(name):
     "Recommended to be optimized"
@@ -1416,7 +1416,7 @@ def _catboost_bagging_temp(name):
     return hp.uniform(name, 0, 1)
 
 def _catboost_random_strength(name):
-    return hp.uniform(name, 1, 20)
+    return hp.choice(name, [1,20])
 
 def _catboost_scale_pos_weight(name):
     return hp.uniform(name, 0.1, 10)
@@ -1508,10 +1508,10 @@ def _catboost_hp_space(name_func,
     hp_space = dict(
         max_depth=(_catboost_max_depth(name_func('max_depth'))
                    if max_depth is None else max_depth),
-        learning_rate=(_catboost_learning_rate(name_func('learning_rate'))
-                       if learning_rate is None else learning_rate),
-        n_estimators=(_catboost_n_estimators(name_func('n_estimators'))
-                      if n_estimators is None else n_estimators),
+        # learning_rate=(_catboost_learning_rate(name_func('learning_rate'))
+        #                if learning_rate is None else learning_rate),
+        # n_estimators=(_catboost_n_estimators(name_func('n_estimators'))
+        #               if n_estimators is None else n_estimators),
         # subsample=(_catboost_subsample(name_func('subsample'))
         #            if subsample is None else subsample),
         # colsample_bylevel=(_catboost_colsample_bylevel(name_func('colsample_bylevel'))
