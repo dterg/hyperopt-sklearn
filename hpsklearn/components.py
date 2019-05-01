@@ -1409,14 +1409,14 @@ def _catboost_reg_alpha(name):
 
 def _catboost_reg_lambda(name):
     "Recommended to be optimized. Alias: l2_leaf_reg"
-    return hp.loguniform(name, np.log(1), np.log(4))
+    return hp.loguniform(name, 0, np.log(10))
 
 def _catboost_bagging_temp(name):
     "Recommended to be optimized."
-    return hp.uniform(name, 0, 100000)
+    return hp.uniform(name, 0, 1)
 
 def _catboost_random_strength(name):
-    return hp.uniform(name, 0, 1)
+    return hp.uniform(name, 1, 20)
 
 def _catboost_scale_pos_weight(name):
     return hp.uniform(name, 0.1, 10)
