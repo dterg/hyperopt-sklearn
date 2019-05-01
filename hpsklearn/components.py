@@ -117,6 +117,9 @@ def sklearn_XGBClassifier(*args, **kwargs):
 def CatBoostClassifier(*args, **kwargs):
     if catboost is None:
         raise ImportError('No module named catboost')
+       
+    if 'cat_features' in kwargs:
+        kwargs['cat_features'] = list(kwargs['cat_features'])
     return catboost.CatBoostClassifier(*args, **kwargs)
 
 @scope.define
@@ -1537,7 +1540,7 @@ def catboost_classification(name, **kwargs):
         return '%s.%s_%s' % (name, 'catboost', msg)
 
     hp_space = _catboost_hp_space(_name, **kwargs)
-    return scope.CatBoostClassifier(**hp_space)
+    return scope.CatBoostClassifier(**hp_space, **kwargs)
 
 
 #################################################
